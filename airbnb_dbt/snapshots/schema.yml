@@ -1,0 +1,48 @@
+version: 2
+
+snapshots:
+
+  - name: airbnb_listing_snapshot
+    description: >
+      SCD Type 2 snapshot of Airbnb listings.
+      Tracks changes in listing attributes over time.
+
+    columns:
+      - name: dbt_scd_id
+        description: Surrogate key for the snapshot row
+        tests:
+          - unique
+          - not_null
+
+      - name: listing_id
+        description: Business key for the listing
+        tests:
+          - not_null
+
+      - name: dbt_valid_from
+        description: Timestamp when this version became valid
+        tests:
+          - not_null
+
+
+  - name: airbnb_host_snapshot
+    description: >
+      SCD Type 2 snapshot of Airbnb hosts.
+      Tracks changes in host attributes over time.
+
+    columns:
+      - name: dbt_scd_id
+        description: Surrogate key for the snapshot row
+        tests:
+          - unique
+          - not_null
+
+      - name: host_id
+        description: Business key for the host
+        tests:
+          - not_null
+
+      - name: dbt_valid_from
+        description: Timestamp when this version became valid
+        tests:
+          - not_null

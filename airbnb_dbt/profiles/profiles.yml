@@ -1,0 +1,14 @@
+airbnb_dbt:
+  outputs:
+    dev:
+      dataset: etl_dataset
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      location: EU
+      method: service-account
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
+      priority: interactive
+      project: etl-portfolio
+      threads: 3
+      type: bigquery
+  target: dev

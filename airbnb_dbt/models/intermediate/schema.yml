@@ -1,0 +1,11 @@
+version: 2
+
+models:
+
+  - name: int_airbnb_listing_scoped
+    description: "Joins staging with SCD2 dimensions to assign correct SKs for each snapshot."
+    columns:
+      - name: snapshot_date
+      - name: listing_sk
+      - name: host_sk
+      - name: neighbourhood_sk

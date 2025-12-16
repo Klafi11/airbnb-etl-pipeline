@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+- name: airbnb_staging
+  database: etl-portfolio
+  schema: etl_dataset_staging
+  
+  tables:
+    - name: stg_airbnb_listings_raw
+      description: "Staging Airbnb listing loaded via Apache Beam"
+
+      columns:
+        - name: id
+          tests: 
+            - not_null
+        - name: processed_at
+          tests:
+            - not_null

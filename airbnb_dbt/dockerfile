@@ -1,0 +1,30 @@
+# dbt Docker image for BigQuery
+FROM python:3.11-slim
+
+# dbt environment
+ENV PYTHONUNBUFFERED=1 \
+    DBT_PROJECT_DIR=/dbt \
+    DBT_PROFILES_DIR=/dbt/profiles
+
+# Working directory
+WORKDIR /dbt
+
+# System dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install dbt BigQuery adapter
+RUN pip install --upgrade pip \
+    && pip install dbt-bigquery==1.7.9
+
+# Copy dbt project
+COPY . /dbt
+
+# Install dbt packages (if packages.yml exists)
+#RUN dbt deps --profiles-dir /dbt/profiles || true
+
+
+CMD ["dbt", "run"]

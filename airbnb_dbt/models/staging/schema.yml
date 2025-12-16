@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_airbnb_listings
+    description: "Cleaned Airbnb listings for analytics"
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+            combination_of_columns:
+              - listing_id
+              - snapshot_date
+
+    columns:
+      - name: listing_id
+        tests:
+          - not_null
+
+      - name: host_id
+        tests:
+          - not_null
+
+      - name: snapshot_date
+        tests:
+          - not_null
+          
+  - name: idemp_airbnb_listings_raw
+    description: "Incremental Table for Airbnb listing idempotency"

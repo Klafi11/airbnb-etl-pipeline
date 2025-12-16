@@ -1,0 +1,121 @@
+version: 2
+
+models:
+
+  #######################################################################
+  # LISTING DIMENSION (SCD2)
+  #######################################################################
+  - name: dim_listing_scd2
+    description: "SCD2 Listing dimension created from snapshots."
+    columns:
+      - name: listing_sk
+        tests:
+          - unique
+          - not_null
+
+      - name: listing_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_airbnb_listings')
+              field: listing_id
+
+      - name: listing_name
+      - name: room_type
+      - name: price
+      - name: minimum_nights
+      - name: latitude
+      - name: longitude
+      - name: license
+
+      - name: effective_from
+        tests: [not_null]
+
+      - name: effective_to
+      - name: is_current
+
+
+  #######################################################################
+  # HOST DIMENSION (SCD2)
+  #######################################################################
+  - name: dim_host_scd2
+    description: "SCD2 Host dimension built from host snapshots."
+    columns:
+      - name: host_sk
+        tests:
+          - unique
+          - not_null
+
+      - name: host_id
+        tests: [not_null]
+
+      - name: host_name
+      - name: calculated_host_listings_count
+
+      - name: effective_from
+        tests: [not_null]
+
+      - name: effective_to
+      - name: is_current
+
+
+  #######################################################################
+  # C) NEIGHBOURHOOD DIMENSION (TYPE 1)
+  #######################################################################
+  - name: dim_neighbourhood
+    description: "Type 1 borough + neighbourhood dimension."
+    columns:
+      - name: neighbourhood_sk
+        tests:
+          - unique
+          - not_null
+
+      - name: borough
+        tests:
+          - not_null
+
+      - name: neighbourhood
+        tests:
+          - not_null
+
+
+  #######################################################################
+  # FACT TABLE — EVENT-DRIVEN SNAPSHOTS
+  #######################################################################
+  - name: fact_listing_snapshot
+    description: "Event-driven fact storing quarterly listing metrics."
+    columns:
+
+      - name: listing_snapshot_sk
+        tests:
+          - unique
+          - not_null
+
+      - name: listing_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_listing_scd2')
+              field: listing_sk
+
+      - name: host_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_host_scd2')
+              field: host_sk
+
+      - name: neighbourhood_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_neighbourhood')
+              field: neighbourhood_sk
+
+      - name: snapshot_date
+        tests:
+          - not_null
+
+      - name: availability_365
+      - name: number_of_reviews
+      - name: number_of_reviews_ltm
