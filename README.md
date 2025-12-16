@@ -48,7 +48,7 @@ project-root/
 │   └── bootstrap_pipeline.sh    # One-command pipeline setup
 │
 └── README.md
-
+```
 ---
 
 ## Technologies Used
