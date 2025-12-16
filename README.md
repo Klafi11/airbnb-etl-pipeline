@@ -78,8 +78,8 @@ project-root/
 From the project root:
 
 ```bash
-chmod +x scripts/bootstrap_pipeline.sh
-./scripts/bootstrap_pipeline.sh
+chmod +x infra/setup/bootstrap_pipeline.sh
+./infra/setup/bootstrap_pipeline.sh
 ```
 Access Airflow UI
 Once running:
