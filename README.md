@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project implements an **end-to-end data pipeline for Airbnb listings data**, 
+This project implements an **end-to-end ETL Batch pipeline for Airbnb listings data**, 
 
 The pipeline ingests raw Airbnb data, processes it using **Apache Beam (Dataflow)**, orchestrates workflows with **Apache Airflow**, and transforms analytics-ready models using **dbt**.
 
@@ -21,8 +21,6 @@ The system is fully containerized with **Docker**, enabling reproducibility, por
 5. **Airflow DAGs** manage dependencies and execution
 
 ---
-
-## Project Structure
 
 ## Project Structure
 
@@ -60,6 +58,18 @@ project-root/
 - **GCP/BigQuery** – Cloud Data Warehouse
 - **Python** – ETL logic & Airflow DAGs
 - **SQL** – Analytics models
+
+## Architecture Diagram
+
+![Architecture Diagram](docs/architecture.png)
+
+**Data Flow Overview:**
+1. Airbnb raw data is uploaded to Google Cloud Storage
+2. Apache Airflow orchestrates the pipeline execution
+3. Apache Beam (running on Dataflow) performs ingestion & cleansing
+4. Raw and staged tables are written to BigQuery
+5. dbt builds analytics-ready incremental models
+
 
 
 ## Local Setup (Fast Start)

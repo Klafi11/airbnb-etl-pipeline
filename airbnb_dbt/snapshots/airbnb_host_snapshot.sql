@@ -12,10 +12,16 @@
 }}
 
 select
-    distinct
-      host_id,
-      host_name,
-      calculated_host_listings_count,
+  host_id,
+  host_name,
+  calculated_host_listings_count
 from {{ ref('stg_airbnb_listings') }}
+qualify row_number() over (
+  partition by host_id
+  order by
+    snapshot_date desc,
+    calculated_host_listings_count desc,
+    host_name desc
+) = 1
 
 {% endsnapshot %}
